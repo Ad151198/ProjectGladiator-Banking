@@ -1,12 +1,22 @@
 package com.lcf.app.beans;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="LOGIN_CREDENTIALS")
 public class LoginCredentials {
 	
-	private String loginPassword;
-	private int transactionPin;
-	private CustomerDetails customerDetail;
+	@Id
+	@Column(name="CUSTOMER_ID")
+	private long customerId;
 	
-//	private long customerId;
+	@Column(name="LOGIN_PASSWORD")
+	private String loginPassword;
+	
+	@Column(name="TRANSACTION_PIN")
+	private int transactionPin;
+	
+	
 //	this.customerId = CustomerDetails.customerId;
 
 }
