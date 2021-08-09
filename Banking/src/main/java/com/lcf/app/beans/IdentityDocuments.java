@@ -4,6 +4,6 @@ public class IdentityDocuments {
 	
 	private long aadharNumber;
 	private String pan;
-	private CustomerDetails customerDetail;
+	private long customerId;
 
 }
