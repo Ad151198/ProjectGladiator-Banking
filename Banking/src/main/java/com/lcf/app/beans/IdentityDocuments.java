@@ -15,10 +15,6 @@ public class IdentityDocuments {
 	
 	@Column(name="PAN")
 	private String pan;
-<<<<<<< HEAD
-	private long customerId;
-=======
-	
->>>>>>> branch 'main' of https://github.com/Ad151198/ProjectGladiator-Banking.git
 
+	
 }
