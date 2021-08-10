@@ -1,12 +1,62 @@
 package com.lcf.app.beans;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="LOGIN_CREDENTIALS")
 public class LoginCredentials {
 	
-	private String loginPassword;
-	private int transactionPin;
-	private CustomerDetails customerDetail;
+	@Id
+	@Column(name="CUSTOMER_ID")
+	private long customerId;
 	
-//	private long customerId;
-//	this.customerId = CustomerDetails.customerId;
+	@Column(name="LOGIN_PASSWORD")
+	private String loginPassword;
+	
+	@Column(name="TRANSACTION_PIN")
+	private int transactionPin;
 
+	public LoginCredentials() {
+		super();
+	}
+
+	public LoginCredentials(long customerId, String loginPassword, int transactionPin) {
+		super();
+		this.customerId = customerId;
+		this.loginPassword = loginPassword;
+		this.transactionPin = transactionPin;
+	}
+
+	public long getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(long customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getLoginPassword() {
+		return loginPassword;
+	}
+
+	public void setLoginPassword(String loginPassword) {
+		this.loginPassword = loginPassword;
+	}
+
+	public int getTransactionPin() {
+		return transactionPin;
+	}
+
+	public void setTransactionPin(int transactionPin) {
+		this.transactionPin = transactionPin;
+	}
+
+	@Override
+	public String toString() {
+		return "LoginCredentials \n [customerId=" + customerId + ", loginPassword=" + loginPassword + ", transactionPin="
+				+ transactionPin + "]";
+	}
+	
+//	this.customerId = CustomerDetails.customerId;
+	
 }
