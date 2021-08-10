@@ -21,7 +21,8 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
-	//http://localhost:8090/banking/lcf/home-page/apply
+		//taking new customer details 
+		//http://localhost:8090/banking/lcf/home-page/apply
 		@PostMapping("/apply")
 		public int newCustomer(@RequestBody CustomerDetails customer) {
 			customerService.newCustomer(customer);
@@ -29,10 +30,11 @@ public class CustomerController {
 			return 0;
 		}
 		
+		//providing customer details by id
 		//http://localhost:8090/banking/lcf/home-page/user-profile/10000001
 		@GetMapping("/user-profile/{id}")
-		public CustomerDetails getByCustomerId(@PathVariable(value="id") long id) {
-			CustomerDetails customer= customerService.getByCustomerId(id);
+		public CustomerDetails getCustomerById(@PathVariable(value="id") long id) {
+			CustomerDetails customer= customerService.getCustomerById(id);
 			return customer;
 		}
 

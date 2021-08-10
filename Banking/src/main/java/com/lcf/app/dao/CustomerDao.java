@@ -7,6 +7,6 @@ import com.lcf.app.beans.CustomerDetails;
 public interface CustomerDao {
 	
 	public abstract int newCustomer(CustomerDetails customer);
-	public abstract CustomerDetails getByCustomerId(long id);
+	public abstract CustomerDetails getCustomerById(long id);
 
 }

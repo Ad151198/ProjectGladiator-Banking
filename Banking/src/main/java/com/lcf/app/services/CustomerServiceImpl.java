@@ -12,15 +12,16 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	CustomerDao customerDao;
 
+	//calling DAO layer
 	@Override
 	public int newCustomer(CustomerDetails customer) {
 		customerDao.newCustomer(customer);
 		return 0;
 	}
-
+	
 	@Override
-	public CustomerDetails getByCustomerId(long id) {
-		CustomerDetails customer = customerDao.getByCustomerId(id);
+	public CustomerDetails getCustomerById(long id) {
+		CustomerDetails customer = customerDao.getCustomerById(id);
 		return customer;
 	}
 

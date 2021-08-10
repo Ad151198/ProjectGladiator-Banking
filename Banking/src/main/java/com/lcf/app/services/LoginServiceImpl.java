@@ -11,6 +11,7 @@ public class LoginServiceImpl implements LoginService{
 	@Autowired
 	LoginDao loginDao;
 	
+	//calling login from DAO layer
 	@Override
 	public boolean login(long userId, String password) {
 		boolean flag = loginDao.login(userId, password);

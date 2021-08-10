@@ -24,10 +24,11 @@ public class CustomerDaoImpl implements CustomerDao {
 		em.persist(customer);
 		return 0;
 	}
-
+	
+	//searching customer by id
 	@Override
 	@Transactional
-	public CustomerDetails getByCustomerId(long id) {
+	public CustomerDetails getCustomerById(long id) {
 		CustomerDetails customer = em.find(CustomerDetails.class, id);
 		return customer;
 	}
