@@ -3,29 +3,109 @@ package com.lcf.app.beans;
 import javax.persistence.*;
 
 @Entity
-@Table(name="ADDRESS_DETAILS")
-public class AddressDetails {
+@Table(name = "ADDRESS_DETAILS")
+public  class AddressDetails {
 	@Id
-	@Column(name="ADDRESS_ID")
+	@Column(name = "ADDRESS_ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HB_ADD_SEQ")
+	@SequenceGenerator(name = "HB_ADD_SEQ", sequenceName = "AddressId_Sequence", allocationSize = 1)
 	private int addressId;
-	
-	@Column(name="ADDRESS_LINE1")
+
+	@Column(name = "ADDRESS_LINE_1")
 	private String addressLine1;
-	
-	@Column(name="ADDRESS_LINE2")
+
+	@Column(name = "ADDRESS_LINE_2")
 	private String addressLine2;
-	
-	@Column(name="LANDMARK")
+
+	@Column(name = "LANDMARK")
 	private String landmark;
-	
-	@Column(name="CITY")
+
+	@Column(name = "CITY")
 	private String city;
-	
-	@Column(name="STATE")
+
+	@Column(name = "STATE")
 	private String state;
-	
-	@Column(name="PINCODE")
+
+	@Column(name = "PINCODE")
 	private long pinCode;
-	
+
+	public AddressDetails() {
+		super();
+	}
+
+	public AddressDetails(int addressId, String addressLine1, String addressLine2, String landmark, String city,
+			String state, long pinCode) {
+		super();
+		this.addressId = addressId;
+		this.addressLine1 = addressLine1;
+		this.addressLine2 = addressLine2;
+		this.landmark = landmark;
+		this.city = city;
+		this.state = state;
+		this.pinCode = pinCode;
+	}
+
+	public int getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(int addressId) {
+		this.addressId = addressId;
+	}
+
+	public String getAddressLine1() {
+		return addressLine1;
+	}
+
+	public void setAddressLine1(String addressLine1) {
+		this.addressLine1 = addressLine1;
+	}
+
+	public String getAddressLine2() {
+		return addressLine2;
+	}
+
+	public void setAddressLine2(String addressLine2) {
+		this.addressLine2 = addressLine2;
+	}
+
+	public String getLandmark() {
+		return landmark;
+	}
+
+	public void setLandmark(String landmark) {
+		this.landmark = landmark;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public long getPinCode() {
+		return pinCode;
+	}
+
+	public void setPinCode(long pinCode) {
+		this.pinCode = pinCode;
+	}
+
+	@Override
+	public String toString() {
+		return "AddressDetails \n [addressId=" + addressId + ", addressLine1=" + addressLine1 + ", addressLine2="
+				+ addressLine2 + ", landmark=" + landmark + ", city=" + city + ", state=" + state + ", pinCode="
+				+ pinCode + "]";
+	}
 
 }
