@@ -16,6 +16,7 @@ public class LoginDaoImpl implements LoginDao{
 	@PersistenceContext
 	EntityManager em;
 	
+	//validating the customerId and password
 	@Override
 	@Transactional
 	public boolean login(long userId, String password) {
