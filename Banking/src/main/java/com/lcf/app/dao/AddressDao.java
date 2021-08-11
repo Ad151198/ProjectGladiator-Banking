@@ -4,6 +4,6 @@ import com.lcf.app.beans.AddressDetails;
 
 public interface AddressDao {
 	
-	public abstract String insertAddress(AddressDetails address);
+	public abstract long insertAddress(AddressDetails address);
 
 }

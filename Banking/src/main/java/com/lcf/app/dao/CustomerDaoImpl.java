@@ -19,10 +19,10 @@ public class CustomerDaoImpl implements CustomerDao {
 	//adding new customer details via customerdetails class
 	@Override
 	@Transactional
-	public int newCustomer(CustomerDetails customer) {
+	public long newCustomer(CustomerDetails customer) {
 		System.out.println("dao");
 		em.persist(customer);
-		return 0;
+		return customer.getCustomerId();
 	}
 	
 	//searching customer by id
