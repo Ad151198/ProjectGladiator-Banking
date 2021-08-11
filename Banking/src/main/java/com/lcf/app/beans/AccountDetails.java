@@ -13,31 +13,28 @@ public class AccountDetails {
 	private long accountNumber;
 	
 	@Column(name="ACCOUNT_TYPE")
-	private String accountType = "Saving";
+	private String accountType = "Savings";
 	
 	@Column(name="AVAILABLE_BALANCE")
 	private long availableBalance;
 	
-	@OneToOne(cascade= CascadeType.ALL)
-	@JoinColumn(name="IFSC")
-	private BranchDetails branchDetail;
+	@Column(name="IFSC")
+	private String ifsc;
 	
-	@OneToOne(cascade= CascadeType.ALL)
-	@JoinColumn(name="CUSTOMER_ID")
-	private CustomerDetails customerDetail;
+	@Column(name="CUSTOMER_ID")
+	private long customerId;
 
 	public AccountDetails() {
 		super();
 	}
 
-	public AccountDetails(long accountNumber, String accountType, long availableBalance, BranchDetails branchDetail,
-			CustomerDetails customerDetail) {
+	public AccountDetails(long accountNumber, String accountType, long availableBalance, String ifsc, long customerId) {
 		super();
 		this.accountNumber = accountNumber;
 		this.accountType = accountType;
 		this.availableBalance = availableBalance;
-		this.branchDetail = branchDetail;
-		this.customerDetail = customerDetail;
+		this.ifsc = ifsc;
+		this.customerId = customerId;
 	}
 
 	public long getAccountNumber() {
@@ -56,7 +53,7 @@ public class AccountDetails {
 		this.accountType = accountType;
 	}
 
-	public double getAvailableBalance() {
+	public long getAvailableBalance() {
 		return availableBalance;
 	}
 
@@ -64,26 +61,27 @@ public class AccountDetails {
 		this.availableBalance = availableBalance;
 	}
 
-	public BranchDetails getBranchDetail() {
-		return branchDetail;
+	public String getIfsc() {
+		return ifsc;
 	}
 
-	public void setBranchDetail(BranchDetails branchDetail) {
-		this.branchDetail = branchDetail;
+	public void setIfsc(String ifsc) {
+		this.ifsc = ifsc;
 	}
 
-	public CustomerDetails getCustomerDetail() {
-		return customerDetail;
+	public long getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomerDetail(CustomerDetails customerDetail) {
-		this.customerDetail = customerDetail;
+	public void setCustomerId(long customerId) {
+		this.customerId = customerId;
 	}
 
 	@Override
 	public String toString() {
-		return "AccountDetails \n [accountNumber=" + accountNumber + ", accountType=" + accountType + ", availableBalance="
-				+ availableBalance + ", branchDetail=" + branchDetail + ", customerDetail=" + customerDetail + "]";
+		return "AccountDetails [accountNumber=" + accountNumber + ", accountType=" + accountType + ", availableBalance="
+				+ availableBalance + ", ifsc=" + ifsc + ", customerId=" + customerId + "]";
 	}
+
 
 }

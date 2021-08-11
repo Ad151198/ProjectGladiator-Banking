@@ -5,6 +5,9 @@ public class Hybrid {
 	private CustomerDetails customerDetailsObj;
 	private AddressDetails permanentAddressObj;
 	private AddressDetails residentialAddressObj;
+	private LoginCredentials loginCredentialsObj;
+	private AccountDetails accountDetailsObj;
+	private long accountNumber;
 	
 	public Hybrid() {
 		super();
@@ -18,6 +21,30 @@ public class Hybrid {
 		this.residentialAddressObj = residentialAddressObj;
 	}
 	
+	public long getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(long accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
+	public LoginCredentials getLoginCredentialsObj() {
+		return loginCredentialsObj;
+	}
+
+	public void setLoginCredentialsObj(LoginCredentials loginCredentialsObj) {
+		this.loginCredentialsObj = loginCredentialsObj;
+	}
+
+	public AccountDetails getAccountDetailsObj() {
+		return accountDetailsObj;
+	}
+
+	public void setAccountDetailsObj(AccountDetails accountDetailsObj) {
+		this.accountDetailsObj = accountDetailsObj;
+	}
+
 	public CustomerDetails getCustomerDetailsObj() {
 		return customerDetailsObj;
 	}

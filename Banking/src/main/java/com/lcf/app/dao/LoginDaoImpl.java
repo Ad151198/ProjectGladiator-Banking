@@ -37,4 +37,18 @@ public class LoginDaoImpl implements LoginDao{
 			return false;
 		}
 	}
+
+	@Override
+	@Transactional
+	public LoginCredentials getLoginCredentialsById(long id) {
+		LoginCredentials loginObj = em.find(LoginCredentials.class, id);
+		return loginObj;
+	}
+
+	@Override
+	@Transactional
+	public boolean netBankingRegistration(LoginCredentials loginObj) {
+		em.persist(loginObj);
+		return true;
+	}
 }
