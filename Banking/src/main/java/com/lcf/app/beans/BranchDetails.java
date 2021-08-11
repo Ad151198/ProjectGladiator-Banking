@@ -13,19 +13,18 @@ public class BranchDetails {
 	@Column(name="BRANCH_NAME")
 	private String branchName;
 	
-	@OneToOne(cascade= CascadeType.ALL)
-	@JoinColumn(name="ADDRESS_ID")
-	private AddressDetails branchAddress;
+	@Column(name="ADDRESS_ID")
+	private long branchAddressId;
 
 	public BranchDetails() {
 		super();
 	}
 
-	public BranchDetails(String ifsc, String branchName, AddressDetails branchAddress) {
+	public BranchDetails(String ifsc, String branchName, long branchAddressId) {
 		super();
 		this.ifsc = ifsc;
 		this.branchName = branchName;
-		this.branchAddress = branchAddress;
+		this.branchAddressId = branchAddressId;
 	}
 
 	public String getIfsc() {
@@ -44,17 +43,17 @@ public class BranchDetails {
 		this.branchName = branchName;
 	}
 
-	public AddressDetails getBranchAddress() {
-		return branchAddress;
+	public long getBranchAddressId() {
+		return branchAddressId;
 	}
 
-	public void setBranchAddress(AddressDetails branchAddress) {
-		this.branchAddress = branchAddress;
+	public void setBranchAddressId(long branchAddressId) {
+		this.branchAddressId = branchAddressId;
 	}
 
 	@Override
 	public String toString() {
-		return "BranchDetails \n [ifsc=" + ifsc + ", branchName=" + branchName + ", branchAddress=" + branchAddress + "]";
+		return "BranchDetails \n [ifsc=" + ifsc + ", branchName=" + branchName + ", branchAddressId=" + branchAddressId + "]";
 	}
 	
 }
