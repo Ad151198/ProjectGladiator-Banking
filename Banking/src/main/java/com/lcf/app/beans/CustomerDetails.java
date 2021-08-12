@@ -38,10 +38,45 @@ public class CustomerDetails {
 
 	@Column(name = "PERMANENT_ADDRESS_ID")
 	private long permanentAddressId;
+	
+	//private AddressDetails residentialAddressObj;
+	//private AddressDetails permanentAddressObj;
+	
+//	public AddressDetails getResidentialAddressObj() {
+//		return residentialAddressObj;
+//	}
+//
+//	public void setResidentialAddressObj(AddressDetails residentialAddressObj) {
+//		this.residentialAddressObj = residentialAddressObj;
+//	}
+//
+//	public AddressDetails getPermanentAddressObj() {
+//		return permanentAddressObj;
+//	}
+//
+//	public void setPermanentAddressObj(AddressDetails permanentAddressObj) {
+//		this.permanentAddressObj = permanentAddressObj;
+//	}
 
 	public CustomerDetails() {
 		super();
 	}
+
+//	public CustomerDetails(long customerId, String customerName, long contactNumber, String dob, String gender,
+//			String occupation, long annualIncome, String emailId, AddressDetails residentialAddressObj,
+//			AddressDetails permanentAddressObj) {
+//		super();
+//		this.customerId = customerId;
+//		this.customerName = customerName;
+//		this.contactNumber = contactNumber;
+//		this.dob = dob;
+//		this.gender = gender;
+//		this.occupation = occupation;
+//		this.annualIncome = annualIncome;
+//		this.emailId = emailId;
+//		this.residentialAddressObj = residentialAddressObj;
+//		this.permanentAddressObj = permanentAddressObj;
+//	}
 
 	public CustomerDetails(long customerId, String customerName, long contactNumber, String dob, String gender,
 			String occupation, long annualIncome, String emailId) {

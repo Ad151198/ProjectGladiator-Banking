@@ -14,9 +14,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	//calling DAO layer
 	@Override
-	public int newCustomer(CustomerDetails customer) {
-		customerDao.newCustomer(customer);
-		return 0;
+	public long newCustomer(CustomerDetails customer) {
+		long id=customerDao.newCustomer(customer);
+		return id;
 	}
 	
 	@Override

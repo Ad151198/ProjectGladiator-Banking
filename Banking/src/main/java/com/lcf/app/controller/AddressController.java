@@ -19,11 +19,11 @@ public class AddressController {
 	private AddressService addressService;
 
 	//http://localhost:8090/banking/lcf/home-page/insert
-	@PostMapping("/insert")
-	public String insertAddress(@RequestBody AddressDetails address) {
-		addressService.insertAddress(address);
+	@PostMapping("/address-details")
+	public long insertAddress(@RequestBody AddressDetails address) {
+		long id= addressService.insertAddress(address);
 		System.out.println(address);
-		return "Address Added Successfully";
+		return id;
 	}
 
 }

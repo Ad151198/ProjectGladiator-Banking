@@ -28,5 +28,18 @@ public class LoginController {
 		System.out.println(flag);
 		return flag;
 	}
+	
+	public LoginCredentials getLoginCredentialsById(long id) {
+		
+		LoginCredentials loginObj = loginService.getLoginCredentialsById(id);
+		return loginObj;
+	}
+	
+	public boolean netBankingRegistration(LoginCredentials loginObj) {
+		
+		boolean flag= loginService.netBankingRegistration(loginObj);
+		return flag;
+		
+	}
 
 }

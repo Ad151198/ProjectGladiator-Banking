@@ -4,5 +4,5 @@ import com.lcf.app.beans.AddressDetails;
 
 public interface AddressService {
 
-	public abstract String insertAddress(AddressDetails address);
+	public abstract long insertAddress(AddressDetails address);
 }

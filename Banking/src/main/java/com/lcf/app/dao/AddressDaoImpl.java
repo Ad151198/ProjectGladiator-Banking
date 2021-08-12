@@ -18,9 +18,9 @@ public class AddressDaoImpl implements AddressDao{
 
 	@Override
 	@Transactional
-	public String insertAddress(AddressDetails address) {
+	public long insertAddress(AddressDetails address) {
 		em.persist(address);
-		return null;
+		return address.getAddressId();
 	}
 
 }
