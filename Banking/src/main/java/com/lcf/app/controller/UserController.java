@@ -53,10 +53,13 @@ public class UserController {
 	// http://localhost:8090/banking/lcf/home-page/register/address-details
 	@PostMapping("/register/address-details")
 	public long insertAddress(@RequestBody AddressDetails address) {
-		long id = addressService.insertAddress(address);
+		//long id = addressService.insertAddress(address);
+		user.setPermanentAddressObj(address);
 		System.out.println(address);
 		
-		return id;
+		registration(user);
+		
+		return 0;
 	}
 
 	@Autowired
@@ -85,17 +88,19 @@ public class UserController {
 	@Autowired
 	private CustomerService customerService;
 
+	private User user = new User();
 	// taking new customer details
 	// http://localhost:8090/banking/lcf/home-page/apply
 	@PostMapping("/apply")
 	public long newCustomer(@RequestBody CustomerDetails customer) {
-		long customerId = customerService.newCustomer(customer);
+		//long customerId = customerService.newCustomer(customer);
 		// long addressId =
 		// addressController.insertAddress(customer.getResidentialAddressObj());
 		// customer.setResidentialAddressId(addressId);
+		user.setCustomerDetailsObj(customer);
 		System.out.println(customer);
 		
-		return customerId;
+		return 0;
 	}
 
 	// providing customer details by id
@@ -132,36 +137,36 @@ public class UserController {
 
 	// taking new customer details
 	// http://localhost:8090/banking/lcf/home-page/register
-	@PostMapping("/register")
-	public long registration(@RequestBody User register) {
+	//@PostMapping("/register")
+	public long registration(/* @RequestBody */ User register) {
 		
 		long id1, id2;
 
-		AddressDetails tempResidential = register.getResidentialAddressObj();
+		//AddressDetails tempResidential = register.getResidentialAddressObj();
 		AddressDetails tempPermanent = register.getPermanentAddressObj();
 
-		id1 = insertAddress(register.getResidentialAddressObj());
+		//id1 = addressService.insertAddress(register.getResidentialAddressObj());
 
-		if (!(tempResidential.getAddressLine1().equals(tempPermanent.getAddressLine1()))
-				|| !(tempResidential.getAddressLine2().equals(tempPermanent.getAddressLine2()))
-				|| !(tempResidential.getCity().equals(tempPermanent.getCity()))
-				|| !(tempResidential.getLandmark().equals(tempPermanent.getLandmark()))
-				|| !(tempResidential.getAddressLine2().equals(tempPermanent.getAddressLine2()))
-				|| !(tempResidential.getState().equals(tempPermanent.getState()))
-				|| !(tempResidential.getPinCode() == (tempPermanent.getPinCode()))) {
-
-			id2 = insertAddress(register.getPermanentAddressObj());
-
-		}
-
-		else {
-			id2 = id1;
-		}
+//		if (!(tempResidential.getAddressLine1().equals(tempPermanent.getAddressLine1()))
+//				|| !(tempResidential.getAddressLine2().equals(tempPermanent.getAddressLine2()))
+//				|| !(tempResidential.getCity().equals(tempPermanent.getCity()))
+//				|| !(tempResidential.getLandmark().equals(tempPermanent.getLandmark()))
+//				|| !(tempResidential.getAddressLine2().equals(tempPermanent.getAddressLine2()))
+//				|| !(tempResidential.getState().equals(tempPermanent.getState()))
+//				|| !(tempResidential.getPinCode() == (tempPermanent.getPinCode()))) {
+//
+			id2 = addressService.insertAddress(register.getPermanentAddressObj());
+//
+//		}
+//
+//		else {
+//			id2 = id1;
+//		}
 
 		CustomerDetails temp = register.getCustomerDetailsObj();
 		temp.setPermanentAddressId(id2);
-		temp.setResidentialAddressId(id1);
-		long id = newCustomer(temp);
+		//temp.setResidentialAddressId(id1);
+		long id = customerService.newCustomer(temp);
 		
 		return id;
 	}
