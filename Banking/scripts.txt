@@ -46,6 +46,13 @@ PAN VARCHAR2(10),
 AADHAAR_NUMBER NUMBER(12) 
 );
 
+Create table VERIFICATION_STATUS(
+REFERENCE_ID NUMBER(20) PRIMARY KEY,
+CUSTOMER_ID NUMBER(20) , 
+VERIFIED CHAR(1)
+)
+
 create sequence CustomerId_Sequence increment by 1 start with 10000001;
 create sequence AddressId_Sequence increment by 1 start with 1001;
 create sequence Account_Number_Sequence increment by 1 start with 100000000001;
+create sequence ReferenceId_Sequence increment by 1 start with 1009074030230871;

@@ -1,6 +1,6 @@
 package com.lcf.app.beans;
 
-public class Hybrid {
+public class User {
 	
 	private CustomerDetails customerDetailsObj;
 	private AddressDetails permanentAddressObj;
@@ -9,11 +9,11 @@ public class Hybrid {
 	private AccountDetails accountDetailsObj;
 	private long accountNumber;
 	
-	public Hybrid() {
+	public User() {
 		super();
 	}
 	
-	public Hybrid(CustomerDetails customerDetailsObj, AddressDetails permanentAddressObj,
+	public User(CustomerDetails customerDetailsObj, AddressDetails permanentAddressObj,
 			AddressDetails residentialAddressObj) {
 		super();
 		this.customerDetailsObj = customerDetailsObj;
