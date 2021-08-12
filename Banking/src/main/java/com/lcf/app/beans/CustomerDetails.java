@@ -38,6 +38,7 @@ public class CustomerDetails {
 
 	@Column(name = "PERMANENT_ADDRESS_ID")
 	private long permanentAddressId;
+
 	
 	//private AddressDetails residentialAddressObj;
 	//private AddressDetails permanentAddressObj;
