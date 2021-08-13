@@ -123,7 +123,7 @@ public class UserController {
 		String password = log.getLoginPassword();
 		boolean flag = loginService.login(userId, password);
 		System.out.println(flag);
-		
+		//System.out.println(log);
 		return flag;
 	}
 
