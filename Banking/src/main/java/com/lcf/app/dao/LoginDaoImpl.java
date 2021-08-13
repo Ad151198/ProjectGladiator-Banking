@@ -19,22 +19,22 @@ public class LoginDaoImpl implements LoginDao{
 	//validating the customerId and password
 	@Override
 	@Transactional
-	public boolean login(long userId, String password) {
+	public int login(long userId, String password) {
 		LoginCredentials log = em.find(LoginCredentials.class, userId);
 		
 		if(log == null) {
 			System.out.println("User ID does not exists");
-			return false;
+			return 0;
 		}
 		else if(log.getLoginPassword().equals(password)){
 			System.out.println("Login successful");
-			return true;
+			return 1;
 			
 		}
 		else {
 			System.out.println("User Id and Password does not match");
 			System.out.println(log.getLoginPassword() + password);
-			return false;
+			return -1;
 		}
 	}
 

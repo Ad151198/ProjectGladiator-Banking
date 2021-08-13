@@ -5,7 +5,7 @@ import com.lcf.app.beans.LoginCredentials;
 
 public interface LoginDao {
 	
-	public abstract boolean login(long userId, String password);
+	public abstract int login(long userId, String password);
 	public abstract LoginCredentials getLoginCredentialsById(long id);
 	public abstract boolean netBankingRegistration(LoginCredentials loginObj);
 

@@ -14,8 +14,8 @@ public class LoginServiceImpl implements LoginService{
 	
 	//calling login from DAO layer
 	@Override
-	public boolean login(long userId, String password) {
-		boolean flag = loginDao.login(userId, password);
+	public int login(long userId, String password) {
+		int flag = loginDao.login(userId, password);
 		return flag;
 	}
 

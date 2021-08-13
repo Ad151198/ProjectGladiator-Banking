@@ -32,5 +32,6 @@ public class CustomerDaoImpl implements CustomerDao {
 		CustomerDetails customer = em.find(CustomerDetails.class, id);
 		return customer;
 	}
+	
 
 }
