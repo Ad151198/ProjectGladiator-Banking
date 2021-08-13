@@ -19,4 +19,10 @@ public class AddressServiceImpl implements AddressService{
 		return id;
 	}
 
+	@Override
+	public AddressDetails getAddressById(long addressId) {
+		AddressDetails address = addressDao.getAddressById(addressId);
+		return address;
+	}
+
 }

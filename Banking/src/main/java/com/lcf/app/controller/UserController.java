@@ -13,31 +13,33 @@ import com.lcf.app.beans.AccountDetails;
 import com.lcf.app.beans.AddressDetails;
 import com.lcf.app.beans.BranchDetails;
 import com.lcf.app.beans.CustomerDetails;
+import com.lcf.app.beans.IdentityDocuments;
 import com.lcf.app.beans.User;
 import com.lcf.app.beans.LoginCredentials;
 import com.lcf.app.services.AccountService;
 import com.lcf.app.services.AddressService;
 import com.lcf.app.services.BranchService;
 import com.lcf.app.services.CustomerService;
+import com.lcf.app.services.IdentityService;
 import com.lcf.app.services.LoginService;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/banking/lcf/home-page")
+@RequestMapping("/banking/lcf/user-page")
 public class UserController {
 
 	@Autowired
 	AccountService accountService;
 
-	// http://localhost:8090/banking/lcf/home-page/account-details/{id}
-	@GetMapping("/account-details/{id}")
+	// http://localhost:8090/banking/lcf/user-page/user-profile/account-details/{id}
+	@GetMapping("/user-profile/account-details/{id}")
 	public AccountDetails searchAccountByAccountNumber(@PathVariable(value = "id") long accountNumber) {
 		AccountDetails account = accountService.searchAccountByAccountNumber(accountNumber);
 		
 		return account;
 	}
 
-	// http://localhost:8090/banking/lcf/home-page/register/account-details
+	// http://localhost:8090/banking/lcf/user-page/register/account-details
 	@PostMapping("/register/account-details")
 	public long insertAccount(@RequestBody AccountDetails accountDetails) {
 
@@ -50,7 +52,7 @@ public class UserController {
 	@Autowired
 	private AddressService addressService;
 
-	// http://localhost:8090/banking/lcf/home-page/register/address-details
+	// http://localhost:8090/banking/lcf/user-page/register/address-details
 	@PostMapping("/register/address-details")
 	public long insertAddress(@RequestBody AddressDetails address) {
 		long id = addressService.insertAddress(address);
@@ -58,12 +60,21 @@ public class UserController {
 		
 		return id;
 	}
+	
+	// http://localhost:8090/banking/lcf/user-page/user-profile/address-details/{id}
+		@GetMapping("/user-profile/address-details/{id}")
+	public AddressDetails getAddressById(@PathVariable(value="id") long addressId) {
+		
+		AddressDetails address = addressService.getAddressById(addressId);
+		
+		return address;
+	}
 
 	@Autowired
 	BranchService branchService;
 
-	// http://localhost:8090/banking/lcf/home-page/branch-details/{ifsc}
-	@GetMapping("/branch-details/{ifsc}")
+	// http://localhost:8090/banking/lcf/user-page/user-profile/branch-details/{ifsc}
+	@GetMapping("/user-profile/branch-details/{ifsc}")
 	public BranchDetails getBranchByIfsc(@PathVariable(value = "ifsc") String ifsc) {
 
 		BranchDetails branch = branchService.getBranchByIfsc(ifsc);
@@ -72,7 +83,7 @@ public class UserController {
 
 	}
 
-	// http://localhost:8090/banking/lcf/home-page/register/branch-details
+	// http://localhost:8090/banking/lcf/user-page/register/branch-details
 	@PostMapping("/register/branch-details")
 	public String insertBranch(@RequestBody BranchDetails branchDetails) {
 
@@ -86,8 +97,8 @@ public class UserController {
 	private CustomerService customerService;
 
 	// taking new customer details
-	// http://localhost:8090/banking/lcf/home-page/apply
-	@PostMapping("/apply")
+	// http://localhost:8090/banking/lcf/user-page/register/personal-details
+	@PostMapping("/register/personal-details")
 	public long newCustomer(@RequestBody CustomerDetails customer) {
 		long customerId = customerService.newCustomer(customer);
 		// long addressId =
@@ -99,8 +110,8 @@ public class UserController {
 	}
 
 	// providing customer details by id
-	// http://localhost:8090/banking/lcf/home-page/user-profile/10000001
-	@GetMapping("/user-profile/{id}")
+	// http://localhost:8090/banking/lcf/user-page/user-profile/personal-details/10000001
+	@GetMapping("/user-profile/personal-details/{id}")
 	public CustomerDetails getCustomerById(@PathVariable(value = "id") long id) {
 		CustomerDetails customer = customerService.getCustomerById(id);
 		
@@ -111,12 +122,12 @@ public class UserController {
 	private LoginService loginService;
 
 	// taking customerId and password as input
-	// http://localhost:8090/banking/lcf/home-page/login
+	// http://localhost:8090/banking/lcf/user-page/login
 	@PostMapping("/login")
-	public boolean login(@RequestBody LoginCredentials log) {
+	public int login(@RequestBody LoginCredentials log) {
 		long userId = log.getCustomerId();
 		String password = log.getLoginPassword();
-		boolean flag = loginService.login(userId, password);
+		int flag = loginService.login(userId, password);
 		System.out.println(flag);
 		
 		return flag;
@@ -131,7 +142,7 @@ public class UserController {
 
 
 	// taking new customer details
-	// http://localhost:8090/banking/lcf/home-page/register
+	// http://localhost:8090/banking/lcf/user-page/register
 	@PostMapping("/register")
 	public long registration(@RequestBody User register) {
 		
@@ -166,7 +177,7 @@ public class UserController {
 		return id;
 	}
 
-	// http://localhost:8090/banking/lcf/home-page/register/net-banking
+	// http://localhost:8090/banking/lcf/user-page/register/net-banking
 	@PostMapping("/register/net-banking")
 	public boolean netBankingRegistration(@RequestBody User register) {
 
@@ -183,4 +194,22 @@ public class UserController {
 
 		return flag;
 	}
+	
+	@Autowired
+	IdentityService identityService;
+
+	// http://localhost:8090/banking/lcf/user-page/register/identity-details
+	@PostMapping("/register/identity-details")
+	public long insertIdentityDocuments(@RequestBody IdentityDocuments identityDocuments) {
+		long customerId = identityService.insertIdentityDocuments(identityDocuments);
+		return customerId;
+	}
+
+	// http://localhost:8090/banking/lcf/user-page/user-profile/identity-details/{id}
+	@GetMapping("/user-profile/identity-details/{id}")
+	public IdentityDocuments getIdentityDocumentsById(@PathVariable(value = "id") long customerId) {
+		IdentityDocuments identity = identityService.getIdentityDocumentsById(customerId);
+		return identity;
+	}
+
 }
