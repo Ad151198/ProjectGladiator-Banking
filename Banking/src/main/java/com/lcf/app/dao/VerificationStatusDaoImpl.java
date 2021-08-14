@@ -38,4 +38,14 @@ public class VerificationStatusDaoImpl implements VerificationStatusDao{
 		return referenceList;
 	}
 
+	@Override
+	@Transactional
+	public boolean getStatusByReferenceId(long referenceId) {
+		VerificationStatus reference = em.find(VerificationStatus.class, referenceId);
+		reference.setVerified('Y');
+		em.merge(reference);
+		return true;
+		
+	}
+
 }

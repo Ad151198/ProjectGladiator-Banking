@@ -32,4 +32,9 @@ public class VerificationStatusServiceImpl implements VerificationStatusService 
 		return referenceList;
 	}
 
+	@Override
+	public boolean getStatusByReferenceId(long referenceId) {
+		boolean flag = referenceDao.getStatusByReferenceId(referenceId);
+		return flag;
+	}
 }
