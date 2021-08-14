@@ -26,8 +26,8 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public boolean netBankingRegistration(LoginCredentials loginObj) {
-		boolean flag = loginDao.netBankingRegistration(loginObj);
+	public long netBankingRegistration(LoginCredentials loginObj) {
+		long flag = loginDao.netBankingRegistration(loginObj);
 		return flag;
 	}
 

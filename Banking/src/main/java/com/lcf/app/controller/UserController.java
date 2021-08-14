@@ -1,6 +1,10 @@
 package com.lcf.app.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.instrument.classloading.tomcat.TomcatLoadTimeWeaver;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,15 +17,21 @@ import com.lcf.app.beans.AccountDetails;
 import com.lcf.app.beans.AddressDetails;
 import com.lcf.app.beans.BranchDetails;
 import com.lcf.app.beans.CustomerDetails;
+import com.lcf.app.beans.CustomerTransactionStatement;
 import com.lcf.app.beans.IdentityDocuments;
 import com.lcf.app.beans.User;
+import com.lcf.app.dao.TransactionDao;
 import com.lcf.app.beans.LoginCredentials;
+import com.lcf.app.beans.Summary;
+import com.lcf.app.beans.TransactionDetails;
 import com.lcf.app.services.AccountService;
 import com.lcf.app.services.AddressService;
 import com.lcf.app.services.BranchService;
 import com.lcf.app.services.CustomerService;
+import com.lcf.app.services.CustomerTransactionStatementService;
 import com.lcf.app.services.IdentityService;
 import com.lcf.app.services.LoginService;
+import com.lcf.app.services.TransactionService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -35,7 +45,7 @@ public class UserController {
 	@GetMapping("/user-profile/account-details/{id}")
 	public AccountDetails searchAccountByAccountNumber(@PathVariable(value = "id") long accountNumber) {
 		AccountDetails account = accountService.searchAccountByAccountNumber(accountNumber);
-		
+
 		return account;
 	}
 
@@ -44,7 +54,7 @@ public class UserController {
 	public long insertAccount(@RequestBody AccountDetails accountDetails) {
 
 		long accountNumber = accountService.insertAccount(accountDetails);
-		
+
 		return accountNumber;
 
 	}
@@ -57,19 +67,19 @@ public class UserController {
 	public int insertAddress(@RequestBody AddressDetails address) {
 		//long id = addressService.insertAddress(address);
 		user.setPermanentAddressObj(address);
+
+		int id = addressService.insertAddress(address);
 		System.out.println(address);
-		
 		registration(user);
-		
-		return 0;
+		return id;
 	}
-	
+
 	// http://localhost:8090/banking/lcf/user-page/user-profile/address-details/{id}
 	@GetMapping("/user-profile/address-details/{id}")
-	public AddressDetails getAddressById(@PathVariable(value="id") int addressId) {
-		
+	public AddressDetails getAddressById(@PathVariable(value = "id") int addressId) {
+
 		AddressDetails address = addressService.getAddressById(addressId);
-		
+
 		return address;
 	}
 
@@ -81,7 +91,7 @@ public class UserController {
 	public BranchDetails getBranchByIfsc(@PathVariable(value = "ifsc") String ifsc) {
 
 		BranchDetails branch = branchService.getBranchByIfsc(ifsc);
-		
+
 		return branch;
 
 	}
@@ -91,7 +101,7 @@ public class UserController {
 	public String insertBranch(@RequestBody BranchDetails branchDetails) {
 
 		String ifsc = branchService.insertBranch(branchDetails);
-		
+
 		return ifsc;
 
 	}
@@ -104,14 +114,14 @@ public class UserController {
 	// http://localhost:8090/banking/lcf/user-page/register/personal-details
 	@PostMapping("/register/personal-details")
 	public long newCustomer(@RequestBody CustomerDetails customer) {
-		//long customerId = customerService.newCustomer(customer);
+		long customerId = customerService.newCustomer(customer);
 		// long addressId =
 		// addressController.insertAddress(customer.getResidentialAddressObj());
 		// customer.setResidentialAddressId(addressId);
 		user.setCustomerDetailsObj(customer);
 		System.out.println(customer);
-		
-		return 0;
+
+		return customerId;
 	}
 
 	// providing customer details by id
@@ -119,7 +129,7 @@ public class UserController {
 	@GetMapping("/user-profile/personal-details/{id}")
 	public CustomerDetails getCustomerById(@PathVariable(value = "id") long id) {
 		CustomerDetails customer = customerService.getCustomerById(id);
-		
+
 		return customer;
 	}
 
@@ -135,13 +145,14 @@ public class UserController {
 		int flag = loginService.login(userId, password);
 		System.out.println(flag);
 		System.out.println(log);
+
 		return flag;
 	}
 
 	public LoginCredentials getLoginCredentialsById(long id) {
 
 		LoginCredentials loginObj = loginService.getLoginCredentialsById(id);
-		
+
 		return loginObj;
 	}
 
@@ -150,7 +161,7 @@ public class UserController {
 	// http://localhost:8090/banking/lcf/user-page/register
 	@PostMapping("/register")
 	public long registration(@RequestBody User register) {
-		
+
 		long id1, id2;
 
 		//AddressDetails tempResidential = register.getResidentialAddressObj();
@@ -176,30 +187,38 @@ public class UserController {
 
 		CustomerDetails temp = register.getCustomerDetailsObj();
 		temp.setPermanentAddressId(id2);
+
 		//temp.setResidentialAddressId(id1);
 		long id = customerService.newCustomer(temp);
 		
+		//temp.setResidentialAddressId(id1);
 		return id;
 	}
 
 	// http://localhost:8090/banking/lcf/user-page/register/net-banking
 	@PostMapping("/register/net-banking")
-	public boolean netBankingRegistration(@RequestBody User register) {
+	public long netBankingRegistration(@RequestBody LoginCredentials register) {
 
-		long userId = searchAccountByAccountNumber(register.getAccountNumber()).getCustomerId();
-		String password = register.getLoginCredentialsObj().getLoginPassword();
-		int tPin = register.getLoginCredentialsObj().getTransactionPin();
-		
+		AccountDetails account = searchAccountByAccountNumber(register.getCustomerId());
+
+		if (account == null) {
+			return 0;
+		}
+
+		long userId = account.getCustomerId();
+		String password = register.getLoginPassword();
+		int tPin = register.getTransactionPin();
+
 		LoginCredentials loginObj = new LoginCredentials();
 		loginObj.setCustomerId(userId);
 		loginObj.setLoginPassword(password);
 		loginObj.setTransactionPin(tPin);
 
-		boolean flag = loginService.netBankingRegistration(loginObj);
+		long flag = loginService.netBankingRegistration(loginObj);
 
 		return flag;
 	}
-	
+
 	@Autowired
 	IdentityService identityService;
 
@@ -215,6 +234,111 @@ public class UserController {
 	public IdentityDocuments getIdentityDocumentsById(@PathVariable(value = "id") long customerId) {
 		IdentityDocuments identity = identityService.getIdentityDocumentsById(customerId);
 		return identity;
+	}
+
+	@Autowired
+	TransactionService transactionService;
+
+	// http://localhost:8090/banking/lcf/user-page/funds-transfer
+	@PostMapping("/funds-transfer")
+	public long commitTransaction(@RequestBody TransactionDetails transaction) {
+		long tPin = transaction.getTransactionId();
+		long accountNo = transaction.getBenefactorAccNumber();
+		AccountDetails benefactorDetails = searchAccountByAccountNumber(accountNo);
+		long customerId = benefactorDetails.getCustomerId();
+		
+		AccountDetails beneficiaryDetails = searchAccountByAccountNumber(transaction.getBeneficiaryAccNumber());
+		if(beneficiaryDetails == null)
+		{
+			System.out.println("Transaction Failed!");
+			return -1;
+		}
+		
+		String accountName = getCustomerById(beneficiaryDetails.getCustomerId()).getCustomerName();
+		if(!accountName.toLowerCase().equals(transaction.getBeneficiaryAccountInfo().toLowerCase()))
+		{
+			System.out.println("Transaction Failed!");
+			return -2;
+		}
+				
+		long tempTPin = getLoginCredentialsById(customerId).getTransactionPin();
+		if(tPin!=tempTPin) {
+			System.out.println("Transaction Failed!");
+			return 0;	
+		}
+		
+		transaction.setTransactionId(0);
+		
+		long benefactorClosingBalance = benefactorDetails.getAvailableBalance() - transaction.getAmount();
+		long beneficiaryClosingBalance = beneficiaryDetails.getAvailableBalance() + transaction.getAmount();
+		
+		benefactorDetails.setAvailableBalance(benefactorClosingBalance);
+		beneficiaryDetails.setAvailableBalance(beneficiaryClosingBalance);
+		
+		long transactionId = transactionService.commitTransaction(transaction);
+		
+		CustomerTransactionStatement benefactorTransactionStatement = new CustomerTransactionStatement(0, transactionId, customerId, benefactorClosingBalance, -1);
+		setCustomerTransactionStatement(benefactorTransactionStatement);
+		
+		CustomerTransactionStatement beneficiaryTransactionStatement = new CustomerTransactionStatement(0, transactionId, beneficiaryDetails.getCustomerId(), beneficiaryClosingBalance, 1);
+		setCustomerTransactionStatement(beneficiaryTransactionStatement);
+		
+		accountService.insertAccount(benefactorDetails);
+		accountService.insertAccount(beneficiaryDetails);
+		
+		generateSummary(customerId);
+		
+		return transactionId;
+	}
+
+	// http://localhost:8090/banking/lcf/user-page/user-profile/transaction-summary/{id}
+	@GetMapping("/user-profile/transaction-summary/{id}")
+	public TransactionDetails transactionDetails(@PathVariable(value = "id") long transactionId) {
+		TransactionDetails transactionDetails = transactionService.transactionDetails(transactionId);
+		return transactionDetails;
+	}
+	
+	@Autowired
+	CustomerTransactionStatementService customerTransactionStatementService;
+	
+	// http://localhost:8090/banking/lcf/user-page/transfer
+	@PostMapping("/transfer")
+	public long setCustomerTransactionStatement(@RequestBody CustomerTransactionStatement customerTransactionStatement) {
+		long sNo = customerTransactionStatementService.setCustomerTransactionStatement(customerTransactionStatement);
+		return sNo;
+	}
+
+	// http://localhost:8090/banking/lcf/user-page/user-profile/transaction/{id}
+	@GetMapping("/user-profile/transaction/{id}")
+	public List<CustomerTransactionStatement> getCustomerTransactionStatement(@PathVariable(value = "id") long customerId) {
+		List<CustomerTransactionStatement> customerTransactionStatement = customerTransactionStatementService.getCustomerTransactionStatement(customerId);
+		return customerTransactionStatement;
+	}
+	
+	@GetMapping("/{id}")
+	public List<Summary> generateSummary(@PathVariable(value = "id") long customerId) {
+		
+		List<CustomerTransactionStatement> customerTransactionStatement = getCustomerTransactionStatement(customerId);
+		System.out.println("1" + customerTransactionStatement);
+		int len = customerTransactionStatement.size();
+		System.out.println("2"+len);
+		TransactionDetails tD;
+		CustomerTransactionStatement cT;
+		//List<Long> transactionId = new ArrayList<>();
+		List<Summary> summary = new ArrayList<>();
+		
+		for(int i = 0; i<len; i++) {
+			cT = customerTransactionStatement.get(i);
+			System.out.println(cT);
+			tD = transactionDetails(cT.getTransactionId());
+			String tInfo = tD.getBeneficiaryAccNumber() + " " + tD.getModeOfTransaction();
+			Summary summ = new Summary(tD.getDateOfTransaction(), cT.getTransactionId(), tInfo, tD.getAmount(), cT.getAction(), cT.getClosingBalance());
+			summary.add(summ);
+		}
+		
+		System.out.println("/n/n/n" + summary);
+		
+		return summary;
 	}
 
 }

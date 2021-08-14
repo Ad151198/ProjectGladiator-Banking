@@ -38,5 +38,12 @@ public class AdminController {
 		CustomerDetails customerDetails = customerService.getCustomerById(id);
 		return customerDetails;
 	}
-
+	
+	@GetMapping("/verification-status/{referenceId}")
+	public boolean getStatusByReferenceId(@PathVariable(value = "referenceId") long referenceId) {
+		boolean check = referenceService.getStatusByReferenceId(referenceId);
+		return check;
+	}
+	
+   
 }

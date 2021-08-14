@@ -6,6 +6,6 @@ public interface LoginService {
 	
 	public abstract int login(long userId, String password);
 	public abstract LoginCredentials getLoginCredentialsById(long id);
-	public abstract boolean netBankingRegistration(LoginCredentials loginObj);
+	public abstract long netBankingRegistration(LoginCredentials loginObj);
 
 }

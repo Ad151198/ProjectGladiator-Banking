@@ -42,13 +42,14 @@ public class LoginDaoImpl implements LoginDao{
 	@Transactional
 	public LoginCredentials getLoginCredentialsById(long id) {
 		LoginCredentials loginObj = em.find(LoginCredentials.class, id);
+		System.out.println(loginObj);
 		return loginObj;
 	}
 
 	@Override
 	@Transactional
-	public boolean netBankingRegistration(LoginCredentials loginObj) {
+	public long netBankingRegistration(LoginCredentials loginObj) {
 		em.persist(loginObj);
-		return true;
+		return 1;
 	}
 }
