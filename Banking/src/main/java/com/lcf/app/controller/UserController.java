@@ -54,7 +54,7 @@ public class UserController {
 
 	// http://localhost:8090/banking/lcf/user-page/register/address-details
 	@PostMapping("/register/address-details")
-	public long insertAddress(@RequestBody AddressDetails address) {
+	public int insertAddress(@RequestBody AddressDetails address) {
 		//long id = addressService.insertAddress(address);
 		user.setPermanentAddressObj(address);
 		System.out.println(address);
@@ -65,8 +65,8 @@ public class UserController {
 	}
 	
 	// http://localhost:8090/banking/lcf/user-page/user-profile/address-details/{id}
-		@GetMapping("/user-profile/address-details/{id}")
-	public AddressDetails getAddressById(@PathVariable(value="id") long addressId) {
+	@GetMapping("/user-profile/address-details/{id}")
+	public AddressDetails getAddressById(@PathVariable(value="id") int addressId) {
 		
 		AddressDetails address = addressService.getAddressById(addressId);
 		
@@ -134,7 +134,7 @@ public class UserController {
 		String password = log.getLoginPassword();
 		int flag = loginService.login(userId, password);
 		System.out.println(flag);
-		//System.out.println(log);
+		System.out.println(log);
 		return flag;
 	}
 
