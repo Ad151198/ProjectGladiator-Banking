@@ -19,13 +19,13 @@ public class AddressDaoImpl implements AddressDao{
 
 	@Override
 	@Transactional
-	public long insertAddress(AddressDetails address) {
+	public int insertAddress(AddressDetails address) {
 		em.persist(address);
 		return address.getAddressId();
 	}
 
 	@Override
-	public AddressDetails getAddressById(long addressId) {
+	public AddressDetails getAddressById(int addressId) {
 		AddressDetails address = em.find(AddressDetails.class, addressId);
 		return address;
 	}

@@ -52,7 +52,31 @@ CUSTOMER_ID NUMBER(20) ,
 VERIFIED CHAR(1)
 )
 
+create table TRANSACTION_DETAILS (
+TRANSACTION_ID NUMBER(20) PRIMARY KEY,
+BENEFACTOR_ACC_NO NUMBER(20),
+BENEFICIARY_ACC_NO NUMBER(20),
+BENEFICIARY_ACCOUNT_INFO VARCHAR2(255),
+AMOUNT NUMBER(20,2),
+DATE_OF_TRANSACTION VARCHAR2(12),
+MODE_OF_TRANSACTION VARCHAR2(20),
+STATUS VARCHAR2(10),
+REMARKS VARCHAR2(255)
+)
+
+Create table customer_transaction_statement(
+S_NO NUMBER(30) PRIMARY KEY,
+CUSTOMER_ID NUMBER(20),
+TRANSACTION_ID NUMBER(20),
+CLOSING_BALANCE NUMBER(20),
+ACTION NUMBER(2)
+
+)
+
+create sequence S_No_Sequence increment by 1 start with 1;
+
 create sequence CustomerId_Sequence increment by 1 start with 10000001;
 create sequence AddressId_Sequence increment by 1 start with 1001;
 create sequence Account_Number_Sequence increment by 1 start with 100000000001;
 create sequence ReferenceId_Sequence increment by 1 start with 1009074030230871;
+create sequence Transaction_Id_Sequence increment by 1 start with 1034574030290886;
