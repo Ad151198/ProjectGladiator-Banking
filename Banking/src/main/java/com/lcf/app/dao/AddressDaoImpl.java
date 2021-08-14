@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.lcf.app.beans.AddressDetails;
+import com.lcf.app.beans.CustomerDetails;
 
 @Repository("addressDao")
 @EnableTransactionManagement
@@ -18,9 +19,15 @@ public class AddressDaoImpl implements AddressDao{
 
 	@Override
 	@Transactional
-	public long insertAddress(AddressDetails address) {
+	public int insertAddress(AddressDetails address) {
 		em.persist(address);
 		return address.getAddressId();
+	}
+
+	@Override
+	public AddressDetails getAddressById(int addressId) {
+		AddressDetails address = em.find(AddressDetails.class, addressId);
+		return address;
 	}
 
 }

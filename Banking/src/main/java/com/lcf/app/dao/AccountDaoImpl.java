@@ -24,7 +24,7 @@ public class AccountDaoImpl implements AccountDao{
 	@Override
 	@Transactional
 	public long insertAccount(AccountDetails accountDetails) {
-		em.persist(accountDetails);
+		em.merge(accountDetails);
 		return accountDetails.getAccountNumber();
 	}
 
