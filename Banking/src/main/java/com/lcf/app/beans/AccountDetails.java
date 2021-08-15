@@ -16,10 +16,10 @@ public class AccountDetails {
 	private String accountType = "Savings";
 	
 	@Column(name="AVAILABLE_BALANCE")
-	private long availableBalance;
+	private long availableBalance=5000;
 	
 	@Column(name="IFSC")
-	private String ifsc;
+	private String ifsc ="LCNF7382";
 	
 	@Column(name="CUSTOMER_ID")
 	private long customerId;

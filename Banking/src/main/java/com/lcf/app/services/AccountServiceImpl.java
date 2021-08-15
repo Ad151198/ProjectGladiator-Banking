@@ -24,4 +24,9 @@ public class AccountServiceImpl implements AccountService{
 		return accountNumber;
 	}
 
+	@Override
+	public AccountDetails searchAccountByCustomerId(long customerId) {
+		AccountDetails account = accountDao.searchAccountByCustomerId(customerId);
+		return account;
+	}
 }

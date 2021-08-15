@@ -19,17 +19,18 @@ public class VerificationStatusDaoImpl implements VerificationStatusDao{
 
 	@Override
 	@Transactional
-	public boolean createReference(VerificationStatus reference) {
+	public long createReference(VerificationStatus reference) {
 		em.persist(reference);
 		
-		return true;
+		return reference.getReferenceId();
 	}
 
 	@Override
-	public long getReferenceById(long id) {
+	public VerificationStatus getReferenceById(long id) {
+		System.out.println("dao ref \n"+id);
 		VerificationStatus reference = em.find(VerificationStatus.class, id);
-		
-		return reference.getCustomerId();
+		System.out.println("dao ref after \n"+reference);
+		return reference;
 	}
 
 	@Override

@@ -6,8 +6,8 @@ import com.lcf.app.beans.VerificationStatus;
 
 public interface VerificationStatusDao {
 	
-	public abstract boolean createReference(VerificationStatus reference);
-	public abstract long getReferenceById(long id);
+	public abstract long createReference(VerificationStatus reference);
+	public abstract VerificationStatus getReferenceById(long id);
 	public abstract List<VerificationStatus> displayAll();
 
 	public abstract boolean getStatusByReferenceId(long referenceId);

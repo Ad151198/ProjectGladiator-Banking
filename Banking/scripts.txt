@@ -78,9 +78,8 @@ create sequence S_No_Sequence increment by 1 start with 1;
 create sequence CustomerId_Sequence increment by 1 start with 10000001;
 create sequence AddressId_Sequence increment by 1 start with 1001;
 create sequence Account_Number_Sequence increment by 1 start with 100000000001;
-<<<<<<< HEAD
+
 create sequence ReferenceId_Sequence increment by 19 start with 1009074030230871;
-=======
-create sequence ReferenceId_Sequence increment by 1 start with 1009074030230871;
+
 create sequence Transaction_Id_Sequence increment by 1 start with 1034574030290886;
->>>>>>> branch 'Branch1' of https://github.com/Ad151198/ProjectGladiator-Banking.git
+

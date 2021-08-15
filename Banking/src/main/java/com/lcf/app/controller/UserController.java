@@ -20,6 +20,7 @@ import com.lcf.app.beans.CustomerDetails;
 import com.lcf.app.beans.CustomerTransactionStatement;
 import com.lcf.app.beans.IdentityDocuments;
 import com.lcf.app.beans.User;
+import com.lcf.app.beans.VerificationStatus;
 import com.lcf.app.dao.TransactionDao;
 import com.lcf.app.beans.LoginCredentials;
 import com.lcf.app.beans.Summary;
@@ -32,6 +33,7 @@ import com.lcf.app.services.CustomerTransactionStatementService;
 import com.lcf.app.services.IdentityService;
 import com.lcf.app.services.LoginService;
 import com.lcf.app.services.TransactionService;
+import com.lcf.app.services.VerificationStatusService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -64,19 +66,20 @@ public class UserController {
 
 	// http://localhost:8090/banking/lcf/user-page/register/address-details
 	@PostMapping("/register/address-details")
-	public int insertAddress(@RequestBody AddressDetails address) {
+	public long insertAddress(@RequestBody AddressDetails address) {
 		//long id = addressService.insertAddress(address);
 		user.setPermanentAddressObj(address);
 
-		int id = addressService.insertAddress(address);
+		//int id = addressService.insertAddress(address);
 		System.out.println(address);
-		registration(user);
+		
+		long id=registration(user);
 		return id;
 	}
 
 	// http://localhost:8090/banking/lcf/user-page/user-profile/address-details/{id}
 	@GetMapping("/user-profile/address-details/{id}")
-	public AddressDetails getAddressById(@PathVariable(value = "id") int addressId) {
+	public AddressDetails getAddressById(@PathVariable(value = "id") long addressId) {
 
 		AddressDetails address = addressService.getAddressById(addressId);
 
@@ -114,14 +117,14 @@ public class UserController {
 	// http://localhost:8090/banking/lcf/user-page/register/personal-details
 	@PostMapping("/register/personal-details")
 	public long newCustomer(@RequestBody CustomerDetails customer) {
-		long customerId = customerService.newCustomer(customer);
+		//long customerId = customerService.newCustomer(customer);
 		// long addressId =
 		// addressController.insertAddress(customer.getResidentialAddressObj());
 		// customer.setResidentialAddressId(addressId);
 		user.setCustomerDetailsObj(customer);
 		System.out.println(customer);
-
-		return customerId;
+		return 1;
+		//return customerId;
 	}
 
 	// providing customer details by id
@@ -221,14 +224,42 @@ public class UserController {
 
 	@Autowired
 	IdentityService identityService;
-
+	
+	@Autowired 
+	VerificationStatusService referenceService;
+	
+	//
+	
 	// http://localhost:8090/banking/lcf/user-page/register/identity-details
 	@PostMapping("/register/identity-details")
 	public long insertIdentityDocuments(@RequestBody IdentityDocuments identityDocuments) {
 		long customerId = identityService.insertIdentityDocuments(identityDocuments);
-		return customerId;
+		AccountDetails account = new AccountDetails();
+		account.setCustomerId(customerId);
+		accountService.insertAccount(account);
+		VerificationStatus verified = new VerificationStatus();
+		verified.setCustomerId(customerId);
+		long referenceId=referenceService.createReference(verified);
+		return referenceId;
 	}
 
+	@GetMapping("/check-status/{id}")
+	public long isVerified(@PathVariable(value="id") long referenceId)
+	{
+		
+		System.out.println("ref \n"+referenceId);
+		VerificationStatus reference=referenceService.getReferenceById(referenceId);
+		System.out.println("\n 1234 \n " + reference);
+		char flag =reference.getVerified();
+		System.out.println("\n done"+flag);
+		long acctNo=accountService.searchAccountByCustomerId(reference.getCustomerId()).getAccountNumber();
+		System.out.println("\n done acctno"+acctNo);
+		if(flag == 'Y')
+		{
+			return acctNo;
+		}
+		return 0;
+	}
 	// http://localhost:8090/banking/lcf/user-page/user-profile/identity-details/{id}
 	@GetMapping("/user-profile/identity-details/{id}")
 	public IdentityDocuments getIdentityDocumentsById(@PathVariable(value = "id") long customerId) {
@@ -315,7 +346,7 @@ public class UserController {
 		return customerTransactionStatement;
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/summary/{id}")
 	public List<Summary> generateSummary(@PathVariable(value = "id") long customerId) {
 		
 		List<CustomerTransactionStatement> customerTransactionStatement = getCustomerTransactionStatement(customerId);

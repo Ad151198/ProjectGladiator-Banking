@@ -15,15 +15,15 @@ public class VerificationStatusServiceImpl implements VerificationStatusService 
 	VerificationStatusDao referenceDao;
 
 	@Override
-	public boolean createReference(VerificationStatus reference) {
-		boolean flag = referenceDao.createReference(reference);
-		return flag;
+	public long createReference(VerificationStatus reference) {
+		long referenceId = referenceDao.createReference(reference);
+		return referenceId;
 	}
 
 	@Override
-	public long getReferenceById(long id) {
-		long customerId = referenceDao.getReferenceById(id);
-		return customerId;
+	public VerificationStatus getReferenceById(long id) {
+		VerificationStatus reference = referenceDao.getReferenceById(id);
+		return reference;
 	}
 
 	@Override

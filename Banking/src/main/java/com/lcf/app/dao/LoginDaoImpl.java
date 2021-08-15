@@ -50,6 +50,6 @@ public class LoginDaoImpl implements LoginDao{
 	@Transactional
 	public long netBankingRegistration(LoginCredentials loginObj) {
 		em.persist(loginObj);
-		return 1;
+		return loginObj.getCustomerId();
 	}
 }

@@ -13,14 +13,14 @@ public class AddressServiceImpl implements AddressService{
 	private AddressDao addressDao;
 	
 	@Override
-	public int insertAddress(AddressDetails address) {
+	public long insertAddress(AddressDetails address) {
 		
-		int id= addressDao.insertAddress(address);
+		long id= addressDao.insertAddress(address);
 		return id;
 	}
 
 	@Override
-	public AddressDetails getAddressById(int addressId) {
+	public AddressDetails getAddressById(long addressId) {
 		AddressDetails address = addressDao.getAddressById(addressId);
 		return address;
 	}

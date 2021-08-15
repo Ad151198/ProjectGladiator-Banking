@@ -9,5 +9,6 @@ public interface TransactionService {
 	
 	public abstract long commitTransaction(TransactionDetails transaction);
 	public abstract TransactionDetails transactionDetails(long transactionId);
+	
 
 }
