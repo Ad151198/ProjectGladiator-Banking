@@ -64,11 +64,11 @@ public class UserController {
 
 	// http://localhost:8090/banking/lcf/user-page/register/address-details
 	@PostMapping("/register/address-details")
-	public int insertAddress(@RequestBody AddressDetails address) {
-		int id = addressService.insertAddress(address);
+	public long insertAddress(@RequestBody AddressDetails address) {
+		//long id = addressService.insertAddress(address);
 		System.out.println(address);
 		registration(user);
-		return id;
+		return 1;
 	}
 
 	// http://localhost:8090/banking/lcf/user-page/user-profile/address-details/{id}
@@ -311,7 +311,7 @@ public class UserController {
 		return customerTransactionStatement;
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/summary/{id}")
 	public List<Summary> generateSummary(@PathVariable(value = "id") long customerId) {
 		
 		List<CustomerTransactionStatement> customerTransactionStatement = getCustomerTransactionStatement(customerId);

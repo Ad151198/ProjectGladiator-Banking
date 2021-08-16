@@ -9,7 +9,7 @@ public class AddressDetails {
 	@Column(name = "ADDRESS_ID")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HB_ADD_SEQ")
 	@SequenceGenerator(name = "HB_ADD_SEQ", sequenceName = "AddressId_Sequence", allocationSize = 1)
-	private int addressId;
+	private long addressId;
 
 	@Column(name = "ADDRESS_LINE_1")
 	private String addressLine1;
@@ -33,7 +33,7 @@ public class AddressDetails {
 		super();
 	}
 
-	public AddressDetails(int addressId, String addressLine1, String addressLine2, String landmark, String city,
+	public AddressDetails(long addressId, String addressLine1, String addressLine2, String landmark, String city,
 			String state, long pinCode) {
 		super();
 		this.addressId = addressId;
@@ -45,11 +45,11 @@ public class AddressDetails {
 		this.pinCode = pinCode;
 	}
 
-	public int getAddressId() {
+	public long getAddressId() {
 		return addressId;
 	}
 
-	public void setAddressId(int addressId) {
+	public void setAddressId(long addressId) {
 		this.addressId = addressId;
 	}
 

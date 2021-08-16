@@ -13,9 +13,9 @@ public class AddressServiceImpl implements AddressService{
 	private AddressDao addressDao;
 	
 	@Override
-	public int insertAddress(AddressDetails address) {
+	public long insertAddress(AddressDetails address) {
 		
-		int id= addressDao.insertAddress(address);
+		long id= addressDao.insertAddress(address);
 		return id;
 	}
 
